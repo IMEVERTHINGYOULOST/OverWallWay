@@ -1,0 +1,50 @@
+1.反正我是在Vultr上选取的日本服务器，不用的时候还可以关掉
+选取之后需要不断尝试Ping，总会有一个是成功的
+
+2.ssh 登录
+
+3.shadowsocks way
+yum install pip 
+pip install shadowsocks
+vi /etc/shadowsocks.json
+{
+    "server":"207.148.108.16",
+    "server_port":8388,
+    "local_address": "127.0.0.1",
+    "local_port":1080,
+    "password":"126999",
+    "timeout":300,
+    "method":"aes-256-cfb",
+    "fast_open": true
+}
+systemctl stop firewalld.service
+ssserver -c /etc/shadowsocks.json -d start
+
+备注：
+如果无法安装pip
+wget https://bootstrap.pypa.io/get-pip.py
+python get-pip.py
+pip -V
+
+
+4.其他懒人一键方法
+使用方法：
+使用root用户登录，运行以下命令：
+
+wget --no-check-certificate -O shadowsocks-libev.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-libev.sh
+chmod +x shadowsocks-libev.sh
+./shadowsocks-libev.sh 2>&1 | tee shadowsocks-libev.log
+安装完成后，脚本提示如下：
+
+Congratulations, Shadowsocks-libev server install completed!
+Your Server IP :your_server_ip
+Your Server Port :your_server_port
+Your Password :your_password
+Your Encryption Method:your_encryption_method
+
+Welcome to visit:https://teddysun.com/357.html
+Enjoy it!
+
+卸载方法：
+使用 root 用户登录，运行以下命令：
+./shadowsocks-libev.sh uninstall
